@@ -134,8 +134,10 @@
 - [x] Define the desktop parity scope for members, subscriptions, payments, attendance, trainers, rooms, classes, PT, reports, settings, and bilingual workflows
 - [ ] Upgrade the desktop data/services and screens as a coherent system rather than a visual-only refresh
 - [ ] Add comprehensive bilingual loading, empty, success, and error states across desktop workflows
+- [x] Add concrete Electron workflow surfaces for classes, rooms, equipment, and reports instead of placeholder sections
+- [ ] Wire secondary Electron workflow surfaces to live IPC data and mutation feedback
 - [x] Configure and document electron-builder installer targets and packaging scripts
-- [ ] Run full desktop tests, type checks, package verification, and save a release checkpoint
+- [x] Run full desktop tests, type checks, package verification, and save a release checkpoint
 - [x] Add explicit bilingual empty states for desktop dashboard activities, notifications, and alerts
 - [x] Add bilingual dashboard error states with retry handling for failed data loads
 - [x] Verify desktop empty/error states with automated tests and package/build checks
