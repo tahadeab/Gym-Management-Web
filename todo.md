@@ -32,3 +32,15 @@
 - [x] Show each member's actual subscription status in the members table
 - [x] Add Vitest coverage for subscription renew, freeze, and unfreeze lifecycle logic
 - [x] Refactor class cancellation to target a specific booking for a displayed class and member
+
+## Mobile, PWA, and repository expansion
+
+- [ ] Create a native Expo mobile app project for gym members and staff
+- [ ] Add bilingual Arabic/English mobile navigation with persistent RTL/LTR preference
+- [ ] Connect mobile app to the gym tRPC/API backend with authenticated data flows
+- [ ] Add mobile dashboard, members, subscriptions, classes/bookings, PT, attendance, and notifications screens
+- [ ] Add PWA manifest, service worker, install metadata, and offline-safe app shell to gym-management-web
+- [ ] Verify PWA install metadata and responsive mobile behavior
+- [ ] Write comprehensive bilingual README documentation for the web/PWA and mobile projects
+- [ ] Create a separate GitHub repository and push gym-management-web with the bilingual README
+- [ ] Run mobile and web type checks/tests and save final checkpoints
