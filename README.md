@@ -53,6 +53,26 @@ The development server prints the local URL when it starts. The default applicat
 
 For the legacy desktop application, use [`tahadeab/GYM-management-system`](https://github.com/tahadeab/GYM-management-system), run `npm install`, and then `npm start`. For the full modern web dashboard, use this repository and run `pnpm dev`.
 
+## Windows PowerShell troubleshooting
+
+If `npm run web` opens a nearly empty page with a welcome message and one button, inspect the current folder with `Get-Location` and `Get-ChildItem`. You are probably inside the legacy `GYM-Management-System` Electron repository. That repository's `npm run web` command only serves its static inspection files on port 8080; it does not launch the modern React dashboard.
+
+Use the following commands to launch the intended application:
+
+```powershell
+# Modern React Web/PWA dashboard
+cd D:\path\to\Gym-Management-Web
+pnpm install
+pnpm dev
+
+# Legacy Electron desktop application
+cd D:\path\to\GYM-Management-System
+npm install
+npm start
+```
+
+The message `Python was not found; run without arguments to install from the Microsoft Store` means Windows could not find `python3`. The fallback `python -m http.server 8080` may still start through a Windows execution-alias or another available Python command, but it only serves the legacy static page. It is unrelated to the modern web server. Close the old server with `Ctrl+C`, switch to the modern web repository, and run `pnpm dev` instead.
+
 ## Production build
 
 ```bash

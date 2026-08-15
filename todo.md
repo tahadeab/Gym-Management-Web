@@ -111,7 +111,7 @@
 
 ## Repository and runtime clarification
 
-- [ ] Document the difference between the legacy GYM-Management-System Electron/static project and the modern Gym-Management-Web application
-- [ ] Verify and document the exact startup commands for the modern web app and legacy desktop app
-- [ ] Update repository links and README guidance so users do not launch the legacy static placeholder when expecting the full web dashboard
-- [ ] Provide a clear Windows PowerShell troubleshooting section for Python fallback and project selection
+- [x] Document the difference between the legacy GYM-Management-System Electron/static project and the modern Gym-Management-Web application
+- [x] Verify and document the exact startup commands for the modern web app and legacy desktop app
+- [x] Update repository links and README guidance so users do not launch the legacy static placeholder when expecting the full web dashboard
+- [x] Provide a clear Windows PowerShell troubleshooting section for Python fallback and project selection
