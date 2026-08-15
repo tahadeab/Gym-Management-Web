@@ -233,5 +233,5 @@
 ## Primary Web repository release corrections
 
 - [ ] Add and verify a Windows Desktop Release workflow for the Web-owned Electron wrapper in Gym-Management-Web
-- [ ] Publish a follow-up commit with the required identity `tahadeab <tahadeab201@gmail.com>` and verify its remote metadata
-- [ ] Document that Gym-Management-Web has no Release yet until the Windows workflow is run successfully
+- [x] Publish a follow-up commit with the required identity `tahadeab <tahadeab201@gmail.com>` and verify its remote metadata
+- [x] Document that Gym-Management-Web has no Release yet until the Windows workflow is run successfully

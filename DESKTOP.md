@@ -21,3 +21,7 @@ For a hosted deployment, set `PULSEFORGE_WEB_URL` before launching Electron. Wit
 ## Release
 
 Windows NSIS generation must run on Windows or GitHub Actions. The resulting installer is produced by `electron-builder` and should be distributed through the GitHub Release assets rather than committed to the repository. Temporary `release/` output is ignored by Git to avoid committing large Chromium binaries.
+
+## Current GitHub release status
+
+The Web-owned Electron wrapper is published in the `main` branch of [tahadeab/Gym-Management-Web](https://github.com/tahadeab/Gym-Management-Web). At the time of this documentation update, that repository has **no GitHub Release yet**. The Windows installer will appear there only after the `Windows Desktop Release` workflow is added to the repository and successfully run with permission to create or update workflow files and releases. The previously visible `v1.0.1` installer belongs to the legacy `GYM-Management-System` repository and should not be confused with this Web-owned desktop build.
