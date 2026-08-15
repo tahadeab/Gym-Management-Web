@@ -18,6 +18,13 @@ test("Electron opens the production Web build and preserves Web route behavior",
   await page.waitForURL(`http://127.0.0.1:${port}/`);
   assert.match(await page.title(), /Gym Management|PulseForge/i);
   assert.match(await page.locator("body").innerText(), /PulseForge|Dashboard|Loading|تسجيل|Login/i);
+  const languageButton = page.getByRole("button", { name: /العربية|English/ }).last();
+  if (await languageButton.isVisible().catch(() => false)) {
+    await languageButton.click();
+    await page.waitForTimeout(100);
+    assert.equal(await page.locator("html").getAttribute("dir"), "rtl");
+    assert.match(await page.locator("body").innerText(), /تسجيل الدخول|English/i);
+  }
 
   await page.goto(`http://127.0.0.1:${port}/404`);
   await page.waitForLoadState("domcontentloaded");

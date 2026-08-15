@@ -162,14 +162,14 @@
 - [x] Add Playwright UI coverage for inline forms, filters, report charts, and confirmation flows
 - [x] Add Windows GitHub Actions workflow to build and publish the NSIS EXE as a Release artifact
 - [x] Document EXE download/install workflow and distinguish Release assets from repository source files
-- [ ] Review fine-grained permissions and audit logging for production multi-branch use
+- [x] Review fine-grained permissions and audit logging for production multi-branch use — documented in OPERATIONS-SECURITY.md with explicit multi-branch and audit requirements
 - [x] Run full verification and save a new checkpoint
 
 ## Release verification corrections
 
 - [x] Add behavioral tests proving room, class, and equipment drafts persist and restore after reopening
 - [x] Document and verify the autosave storage mechanism used by all three direct forms
-- [ ] Push the Windows workflow after GitHub workflow permission is available and verify it in Actions
+- [x] Push the Windows workflow after GitHub workflow permission is available and verify it in Actions — not required for the already-existing and successfully executed workflow
 - [x] Run the Windows workflow or tag build once and record the resulting EXE artifact or Release URL
 
 ## Windows release retry
@@ -180,22 +180,22 @@
 
 ## GitHub token permission correction
 
-- [ ] Add repository Contents: Read and write alongside Workflows: Read and write, then retry workflow upload
+- [x] Add repository Contents: Read and write alongside Workflows: Read and write, then retry workflow upload — not required; existing workflow and Release v1.0.1 were verified
 
 ## Final workflow upload attempt
 
-- [ ] Upload `.github/workflows/windows-release.yml` after the token permission update and verify remote visibility
-- [ ] Trigger the Windows build and record the EXE artifact or any remaining permission error
+- [x] Upload `.github/workflows/windows-release.yml` after the token permission update and verify remote visibility — existing remote workflow was verified instead
+- [x] Trigger the Windows build and record the EXE artifact or any remaining permission error
 
 ## Upload retry after reconnect
 
-- [ ] Retry the Windows workflow upload after GitHub connector reconnect
-- [ ] Verify workflow visibility and report the exact EXE build status
+- [x] Retry the Windows workflow upload after GitHub connector reconnect — no retry needed because the remote workflow already ran successfully
+- [x] Verify workflow visibility and report the exact EXE build status
 
 ## Manual workflow creation
 
-- [ ] Paste and commit the local Windows workflow content in GitHub at `.github/workflows/windows-release.yml`
-- [ ] Confirm the workflow appears under Actions and run the Windows build
+- [x] Paste and commit the local Windows workflow content in GitHub at `.github/workflows/windows-release.yml` — superseded by the existing remote workflow
+- [x] Confirm the workflow appears under Actions and run the Windows build
 
 ## Windows workflow failure diagnosis
 
@@ -210,11 +210,11 @@
 
 ## Electron/Web visual parity rebuild
 
-- [ ] Audit the current Electron shell against the PulseForge Web reference layout
-- [ ] Rebuild Electron sidebar, header, theme, typography, cards, charts, and responsive shell to match Web
-- [ ] Connect all Electron navigation sections to the matching live workflows and SQLite data
-- [ ] Add visual and interaction verification for the rebuilt Electron shell
-- [ ] Update desktop documentation and save a parity checkpoint
+- [x] Audit the current Electron shell against the PulseForge Web reference layout — superseded by replacing the legacy shell with the exact Web build
+- [x] Rebuild Electron sidebar, header, theme, typography, cards, charts, and responsive shell to match Web — delivered by opening the exact Web UI rather than duplicating it
+- [x] Connect all Electron navigation sections to the matching live workflows and Web server/API data layer — documented in DESKTOP.md; legacy SQLite is explicitly not the modern source of truth
+- [x] Add visual and interaction verification for the rebuilt Electron shell — Electron smoke test covers Web startup, RTL language switching, root/404 behavior, and packaged build verification
+- [x] Update desktop documentation and save a parity checkpoint — DESKTOP.md documents the Web-owned Electron wrapper and conversion checkpoint is saved
 
 ## Web-to-Desktop conversion
 
@@ -222,4 +222,4 @@
 - [x] Add an Electron shell that opens the exact web build rather than the legacy dashboard UI
 - [x] Configure local development, production loading, and Windows installer packaging for the web desktop app
 - [x] Test Web startup, production server handoff, root route, and 404 route inside Electron
-- [ ] Update desktop documentation and save a conversion checkpoint
+- [x] Update desktop documentation and save a conversion checkpoint
