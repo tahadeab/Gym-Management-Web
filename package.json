@@ -1,11 +1,20 @@
 {
   "name": "gym-management-web",
+  "main": "electron/main.cjs",
   "version": "1.0.0",
+  "description": "PulseForge bilingual gym management web and desktop application",
+  "author": "taha deab <tahadeab@gmail.com>",
+  "repository": "https://github.com/tahadeab/Gym-Management-Web",
   "type": "module",
   "license": "MIT",
   "scripts": {
     "dev": "NODE_ENV=development tsx watch server/_core/index.ts",
     "build": "vite build && esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "desktop:dev": "pnpm build && electron .",
+    "desktop:dir": "pnpm build && electron-builder --dir",
+    "desktop:win": "pnpm build && electron-builder --win nsis --publish never",
+    "desktop:check": "node --check electron/main.cjs",
+    "desktop:test": "node --test electron/electron-shell.test.cjs",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc --noEmit",
     "format": "prettier --write .",
@@ -79,6 +88,38 @@
     "xlsx": "^0.18.5",
     "zod": "^4.1.12"
   },
+  "build": {
+    "appId": "com.tahadeab.pulseforge.gym",
+    "productName": "PulseForge Gym Management",
+    "asar": true,
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "PulseForge-Gym-Management-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "PulseForge Gym Management"
+    }
+  },
   "devDependencies": {
     "@builder.io/vite-plugin-jsx-loc": "^0.1.1",
     "@tailwindcss/typography": "^0.5.15",
@@ -92,7 +133,10 @@
     "add": "^2.0.6",
     "autoprefixer": "^10.4.20",
     "drizzle-kit": "^0.31.4",
+    "electron": "37",
+    "electron-builder": "26",
     "esbuild": "^0.25.0",
+    "playwright": "1.55",
     "pnpm": "^10.15.1",
     "postcss": "^8.4.47",
     "prettier": "^3.6.2",
@@ -111,6 +155,10 @@
     },
     "overrides": {
       "tailwindcss>nanoid": "3.3.7"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "electron",
+      "electron-winstaller"
+    ]
   }
 }

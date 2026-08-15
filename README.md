@@ -152,3 +152,11 @@ This project is distributed under the MIT License. See [`LICENSE`](./LICENSE).
 ## Maintainer
 
 Maintained by **taha deab**.
+
+## Desktop application from the Web build
+
+The desktop application is now a thin Electron shell around this same `gym-management-web` application. It does not use the legacy Electron dashboard UI. Electron starts the production web server from `dist/index.js` on a local loopback port and opens that exact Web interface in a desktop window, preserving the Web dashboard, Arabic/English switching, RTL/LTR behavior, theme controls, route structure, and server-backed data flows.
+
+Use `pnpm desktop:dev` to build the Web application and open it in Electron during development. Use `pnpm desktop:dir` to create an unpacked desktop build for local verification. On Windows, use `pnpm desktop:win` to generate `PulseForge-Gym-Management-Setup-<version>.exe` through electron-builder. The command disables implicit GitHub publishing; CI or a manual GitHub Release step should publish the resulting installer.
+
+For a deployed Web backend, set `PULSEFORGE_WEB_URL` before launching Electron. Without that variable, Electron starts the bundled production Web server locally. Authentication remains the Web application's authentication flow; the desktop shell does not bypass or replace it.

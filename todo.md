@@ -207,3 +207,19 @@
 - [x] Synchronize package-lock.json with Electron package.json so Windows CI can run `npm ci`
 - [x] Update the manually committed workflow if needed and rerun the failed Windows job
 - [x] Prevent electron-builder implicit GitHub publishing in the Windows build; let the workflow's release action publish the EXE after artifact creation
+
+## Electron/Web visual parity rebuild
+
+- [ ] Audit the current Electron shell against the PulseForge Web reference layout
+- [ ] Rebuild Electron sidebar, header, theme, typography, cards, charts, and responsive shell to match Web
+- [ ] Connect all Electron navigation sections to the matching live workflows and SQLite data
+- [ ] Add visual and interaction verification for the rebuilt Electron shell
+- [ ] Update desktop documentation and save a parity checkpoint
+
+## Web-to-Desktop conversion
+
+- [x] Define the Electron packaging boundary around the gym-management-web production build
+- [x] Add an Electron shell that opens the exact web build rather than the legacy dashboard UI
+- [x] Configure local development, production loading, and Windows installer packaging for the web desktop app
+- [x] Test Web startup, production server handoff, root route, and 404 route inside Electron
+- [ ] Update desktop documentation and save a conversion checkpoint
