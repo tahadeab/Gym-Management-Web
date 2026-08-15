@@ -159,11 +159,11 @@
 
 - [x] Add bilingual confirmation messages before destructive edits/deletes in direct Electron forms
 - [x] Add debounced autosave drafts for room, class, and equipment forms with visible save status and recovery
-- [ ] Add Playwright UI coverage for inline forms, filters, report charts, and confirmation flows
+- [x] Add Playwright UI coverage for inline forms, filters, report charts, and confirmation flows
 - [x] Add Windows GitHub Actions workflow to build and publish the NSIS EXE as a Release artifact
 - [x] Document EXE download/install workflow and distinguish Release assets from repository source files
 - [ ] Review fine-grained permissions and audit logging for production multi-branch use
-- [ ] Run full verification and save a new checkpoint
+- [x] Run full verification and save a new checkpoint
 
 ## Release verification corrections
 
