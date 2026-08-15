@@ -223,3 +223,9 @@
 - [x] Configure local development, production loading, and Windows installer packaging for the web desktop app
 - [x] Test Web startup, production server handoff, root route, and 404 route inside Electron
 - [x] Update desktop documentation and save a conversion checkpoint
+
+## Publish Web-to-Desktop to the primary repository
+
+- [ ] Verify the intended GitHub repository, branch, remote, and local Web-to-Desktop diff
+- [ ] Commit the Web-to-Desktop conversion with `tahadeab <tahadeab@gmail.com>` and push it to the correct primary repository
+- [ ] Verify the remote commit, files, workflow, and release path on GitHub
