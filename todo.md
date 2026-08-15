@@ -123,18 +123,18 @@
 
 ## Desktop UI and installer enhancement
 
-- [ ] Align the Electron desktop visual language with the modern PulseForge web dashboard
-- [ ] Add bilingual loading animations and explanatory loading/empty/error states
+- [x] Align the Electron desktop visual language with the modern PulseForge web dashboard
+- [x] Add bilingual loading animations and explanatory loading/empty/error states
 - [x] Configure electron-builder for a Windows installer and documented packaging commands
 - [x] Run desktop tests and package/build verification, then save a final checkpoint
 
 ## Full desktop system modernization
 
-- [ ] Audit the Electron desktop architecture, modules, data services, and current feature coverage against the modern web system
-- [ ] Define the desktop parity scope for members, subscriptions, payments, attendance, trainers, rooms, classes, PT, reports, settings, and bilingual workflows
+- [x] Audit the Electron desktop architecture, modules, data services, and current feature coverage against the modern web system
+- [x] Define the desktop parity scope for members, subscriptions, payments, attendance, trainers, rooms, classes, PT, reports, settings, and bilingual workflows
 - [ ] Upgrade the desktop data/services and screens as a coherent system rather than a visual-only refresh
 - [ ] Add comprehensive bilingual loading, empty, success, and error states across desktop workflows
-- [ ] Configure and document electron-builder installer targets and packaging scripts
+- [x] Configure and document electron-builder installer targets and packaging scripts
 - [ ] Run full desktop tests, type checks, package verification, and save a release checkpoint
 - [x] Add explicit bilingual empty states for desktop dashboard activities, notifications, and alerts
 - [x] Add bilingual dashboard error states with retry handling for failed data loads
