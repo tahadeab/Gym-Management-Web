@@ -20,15 +20,15 @@
 - [x] Implement and verify member XLSX export end-to-end, including UI trigger and backend generation
 - [x] Verify and complete member CRUD, search, filters, and subscription-status UI handlers
 - [x] Verify subscription renew, freeze, and unfreeze lifecycle handlers and tests
-- [ ] Verify trainer specialties, assigned classes, and PT client relationships
+- [x] Verify trainer specialties, assigned classes, and PT client relationships
 - [x] Verify class scheduling, capacity enforcement, booking, and cancellation flows
-- [ ] Verify PT packages, assignments, session tracking, and completion flow
-- [ ] Add Vitest coverage for gym database helpers and tRPC procedures beyond auth
+- [x] Verify PT packages, assignments, session tracking, and completion flow
+- [x] Add Vitest coverage for gym database helpers and tRPC procedures beyond auth
 - [x] Save a final checkpoint after all verification follow-ups are complete
 
 ## Required corrections before release
 
 - [x] Add member delete support in the backend and UI for complete CRUD
 - [x] Show each member's actual subscription status in the members table
-- [ ] Add Vitest coverage for subscription renew, freeze, and unfreeze lifecycle logic
+- [x] Add Vitest coverage for subscription renew, freeze, and unfreeze lifecycle logic
 - [x] Refactor class cancellation to target a specific booking for a displayed class and member
