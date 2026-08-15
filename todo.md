@@ -91,9 +91,9 @@
 
 ## Gap remediation from final review
 
-- [ ] Add toast success/error handling for PT package, assignment, session, and attendance mutations
-- [ ] Refactor dashboard shell and major surfaces to semantic theme tokens for consistent Light/Dark rendering
-- [ ] Save a new checkpoint after remediation and push all UX/CI changes to the active GitHub repository
+- [x] Add toast success/error handling for PT package, assignment, session, and attendance mutations
+- [x] Refactor dashboard shell and major surfaces to semantic theme tokens for consistent Light/Dark rendering
+- [x] Save a new checkpoint after remediation and push all UX/CI changes to the active GitHub repository
 
 ## Trainer and room scheduling enhancement
 
@@ -101,7 +101,7 @@
 - [x] Add room management and conflict-aware class scheduling where supported by the current schema
 - [x] Improve trainer management UI with operational fields and interactive feedback
 - [x] Verify Toast notifications and Light/Dark mode after the scheduling changes
-- [ ] Push the latest changes to the active GitHub repository without exposing credentials
+- [x] Push the latest changes to the active GitHub repository without exposing credentials
 
 ## Scheduling and theme verification gaps
 
