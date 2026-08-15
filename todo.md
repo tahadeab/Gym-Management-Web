@@ -57,3 +57,17 @@
 - [x] Replace placeholder Expo Members, Subscriptions, Classes, PT, Attendance, and Notifications views with production data-driven screens
 - [x] Run final mobile TypeScript validation after data-driven screen integration
 - [x] Save final cross-platform checkpoint after mobile implementation completion
+
+## Final documentation and release verification
+
+- [x] Rewrite the web/PWA README with complete English setup, architecture, features, API, environment, testing, deployment, and Arabic support documentation
+- [x] Rewrite the mobile README with Expo setup, API configuration, bearer authentication, bilingual behavior, and verification instructions
+- [x] Update the desktop README with complete build, test, bilingual, SQLite, and release instructions
+- [x] Add MIT license files to the web and desktop repositories and verify the mobile license
+- [x] Run final web, mobile, and desktop checks and record any limitations honestly
+- [x] Save a final checkpoint after documentation and verification changes
+
+## Final verification findings
+
+- [x] Document that the desktop repository has no configured installer/package build script and provide the supported source-release procedure
+- [x] Record final verification limitations: ADMIN_PASSWORD must be set for production, mobile token entry is transitional, and native push delivery is not configured

@@ -1,113 +1,130 @@
 # PulseForge Gym Management Web
 
-PulseForge Gym Management is a bilingual Arabic/English web application for operating a modern gym. It combines member management, monthly subscriptions, financial analytics, class scheduling, bookings, attendance, trainers, and personal training in one responsive workspace.
+PulseForge Gym Management is a production-oriented bilingual gym operations platform for staff and administrators. It combines a responsive React dashboard, a database-backed TypeScript API, financial reporting, member and subscription lifecycle management, class bookings, attendance, trainer management, personal training, and an installable Progressive Web App (PWA).
 
-> The application supports English (LTR) and Arabic (RTL). The selected language is persisted in the browser and applies across the dashboard without a page reload.
+The product supports **English with LTR layout** and **Arabic with RTL layout**. The selected language is persisted in the browser and can be changed without a page reload. The same backend can also serve the companion Expo mobile application.
 
-## Features
+## Product scope
 
-The application provides KPI dashboards for members, active subscriptions, daily revenue, attendance, and expiring memberships. Financial reports include configurable date ranges, revenue trends, payment-method distribution, subscription revenue, and immediate XLSX export for reports and filtered member data.
-
-Operations teams can create, edit, search, filter, and safely archive members while seeing the real subscription lifecycle. Subscription workflows include monthly creation, renewal, freeze, unfreeze, expiring, expired, and cancelled states. The class module supports trainer assignment, capacity, pricing, scheduling, booking, and scoped cancellation. Attendance, trainer profiles, PT packages, member assignments, scheduled sessions, and session completion are also connected to the database.
-
-The web application is installable as a Progressive Web App. It includes a web manifest, install metadata, an offline-safe application shell, and a production Service Worker that does not cache API responses.
+| Module | Included capabilities |
+|---|---|
+| Dashboard | Member count, active subscriptions, daily revenue, attendance, expiring subscriptions, revenue trends, and payment mix |
+| Members | Search, status filtering, create, edit, archive, subscription-status visibility, and XLSX export |
+| Subscriptions | Monthly plans, create, renew, freeze, unfreeze, expired/cancelled states, and date-based lifecycle tracking |
+| Financial reports | Date-range revenue reports, daily/weekly/monthly aggregation, payment-method analysis, plan analysis, and XLSX export |
+| Classes and bookings | Trainer assignment, schedule, capacity, price, booking, and scoped booking cancellation |
+| Attendance | Check-in, check-out, activity type, and date-range reporting |
+| Trainers | Trainer list, specialty and contact data, class relationships, and PT relationships |
+| Personal training | Packages, member assignments, scheduled sessions, completion tracking, and status lifecycle |
+| PWA | Web manifest, install metadata, responsive layout, and offline-safe application shell; API responses are not cached |
 
 ## Technology
 
 | Layer | Technology |
 |---|---|
-| Frontend | React 19, Vite, Tailwind CSS 4, Recharts, shadcn/ui |
-| Backend | Express, tRPC 11, TypeScript |
-| Database | MySQL/TiDB through Drizzle ORM |
-| Authentication | Manus OAuth and protected tRPC procedures |
+| Web UI | React 19, Vite, Tailwind CSS 4, shadcn/ui, Recharts |
+| API | Express 4, tRPC 11, TypeScript, Zod |
+| Database | MySQL/TiDB with Drizzle ORM |
+| Authentication | Manus OAuth session cookies and compatible Bearer session headers |
 | Export | XLSX workbook generation |
-| Mobile companion | React Native / Expo project: `gym-management-mobile` |
-| Quality | TypeScript checks and Vitest |
+| Mobile companion | Expo SDK 57, React Native 0.86, React Navigation |
+| Testing | Vitest and TypeScript compiler checks |
 
 ## Requirements
 
-Install Node.js 20 or newer, pnpm, and access to a MySQL/TiDB database. The managed deployment environment supplies the required authentication and database environment variables. For local development, use a `.env` file based on the environment variables documented by the deployment environment; never commit secrets.
+Use Node.js 20 or newer and pnpm 10. A MySQL or TiDB database is required for protected business data. Never commit credentials, session tokens, exported member information, `.env` files, database dumps, or customer data.
 
-## Web setup
+The managed environment supplies platform variables such as `DATABASE_URL`, `JWT_SECRET`, `VITE_APP_ID`, `OAUTH_SERVER_URL`, `VITE_OAUTH_PORTAL_URL`, `OWNER_OPEN_ID`, and the built-in service configuration. For an independent deployment, provide equivalent values through the hosting provider's secret manager rather than hardcoding them.
+
+## Local development
 
 ```bash
+git clone https://github.com/tahadeab/gym-management-web.git
+cd gym-management-web
 pnpm install
 pnpm check
 pnpm test
 pnpm dev
 ```
 
-The development server opens the local preview URL printed by Vite. The production build is created with:
+The development server prints the local URL when it starts. The default application entry is the dashboard. Authentication and protected queries require a configured session and database.
+
+## Production build
 
 ```bash
 pnpm build
 pnpm start
 ```
 
-Database schema changes must be generated with Drizzle and applied through the project's controlled migration workflow. Do not use destructive SQL against a production database without a reviewed backup and migration plan.
+The build creates the Vite client bundle and bundles the Express/tRPC server. Use a managed secret store in production, enable database TLS where supported, and run a reviewed migration process before changing the schema.
 
-## PWA installation
+## Database workflow
 
-Open the production HTTPS URL in a supported browser, then use the browser's **Install app** or **Add to Home Screen** action. The application includes `/manifest.webmanifest` and `/sw.js`. API routes are intentionally excluded from Service Worker caching so membership, payments, attendance, and reports always request current server data.
+The database schema is defined in `drizzle/schema.ts`, query helpers live in `server/db.ts`, and tRPC procedures are defined in `server/routers.ts`. For a schema change, update the Drizzle schema, generate the migration, review the generated SQL, apply it through the controlled migration workflow, and then verify the affected queries and UI. Avoid destructive production SQL without a verified backup and rollback plan.
 
-## Mobile companion app
+## Authentication and API
 
-The native companion project is maintained separately at `/home/ubuntu/gym-management-mobile`. It uses Expo and TypeScript, supports Arabic and English with persistent language selection, and calls the same tRPC backend through `EXPO_PUBLIC_API_URL`.
+Browser authentication uses the OAuth callback and a secure session cookie. Protected procedures are guarded on the server; the client consumes them through the typed tRPC client under `/api/trpc`. The server also accepts a valid signed session token in `Authorization: Bearer <token>`, which is used by the companion mobile application. A mobile token must be issued by the approved authentication gateway and must be short-lived and rotated according to the gym's security policy.
+
+## PWA installation and offline behavior
+
+Serve the application over HTTPS, open it in a supported browser, and choose **Install app** or **Add to Home Screen**. The project exposes `/manifest.webmanifest` and `/sw.js`. The service worker protects the application shell for repeat visits but deliberately excludes `/api/` and tRPC responses from caching so that memberships, payments, attendance, bookings, and reports are not served from stale business data.
+
+## Mobile companion
+
+The separate project at `/home/ubuntu/gym-management-mobile` is an Expo/React Native application using the same backend. It includes dashboard, members, subscriptions, classes, personal training, attendance, and notification views. Notification rows are currently derived from active subscriptions approaching their end date; native push delivery is a separate deployment feature.
 
 ```bash
-cd gym-management-mobile
+cd ../gym-management-mobile
 npm install
 EXPO_PUBLIC_API_URL=https://YOUR-GYM-DOMAIN npm start
 ```
 
-The mobile app expects an authenticated backend session. Configure the approved mobile authentication flow and store a short-lived session token in the platform's secure storage before using protected operations. The current mobile shell exposes dashboard metrics and upcoming classes and displays an explicit unavailable state when the API or authentication is not configured; it does not fabricate business numbers.
+The mobile connection panel stores the short-lived session token under `pulseforge-session-token` in AsyncStorage. For production, replace manual token entry with the organization's approved mobile OAuth or token-exchange flow and use secure device storage.
 
-## Testing
+## Verification commands
 
-Run the web checks with:
+Run the web checks from this repository:
 
 ```bash
 pnpm check
 pnpm test -- --run
 ```
 
-Run the mobile TypeScript check with:
+Run the mobile TypeScript check:
 
 ```bash
-cd gym-management-mobile
+cd ../gym-management-mobile
 npx tsc --noEmit
 ```
 
-The web test suite covers authentication and feature procedures for subscriptions, trainers, classes, bookings, and personal training. Browser verification should be performed against the production build before release.
-
-## Security and data handling
-
-All protected business procedures require an authenticated user. Administrative operations should remain behind the server-side role guard. XLSX files are generated from authorized query results in the browser and are not stored on the server. The Service Worker never caches `/api/` requests. Do not commit `.env`, session tokens, database credentials, exported member data, or backup files.
+The desktop Electron project has its own verification commands documented in its repository. A release should also include browser verification of login, language switching, member CRUD, subscription lifecycle actions, reports, bookings, attendance, and PWA installation metadata.
 
 ## Repository layout
 
 ```text
-client/                 React web application and PWA entry point
-drizzle/                Drizzle schema and migrations
-server/                 Database helpers, tRPC routers, and tests
+client/                 React pages, components, styles, and PWA entry files
+drizzle/                Database schema and migration metadata
+server/                 Database helpers, tRPC routers, authentication, and tests
 shared/                 Shared constants and types
-todo.md                 Feature and verification history
+storage/                Storage helpers
+todo.md                 Feature history and release verification record
 ```
 
-## العربية
+## Engineering and security rules
 
-PulseForge Gym Management هو تطبيق ويب احترافي ثنائي اللغة لإدارة الصالات الرياضية. يدعم التطبيق إدارة الأعضاء والاشتراكات الشهرية والمدفوعات والتقارير المالية والحضور والمدربين والحصص والحجوزات والتدريب الشخصي من خلال لوحة تحكم واحدة متجاوبة.
+All protected business procedures must remain behind authentication and administrative mutations must preserve server-side role checks. Keep file bytes in object storage rather than database columns. Do not cache API responses in the service worker. Validate all dates and numeric inputs at the API boundary. Before submitting a change, run the type check and test suite, update both language variants, and document any new environment variable.
 
-يدعم التطبيق **العربية باتجاه RTL والإنجليزية باتجاه LTR**، ويحفظ اختيار اللغة في المتصفح ويطبقه على جميع الصفحات دون إعادة تحميل. تتضمن التقارير مؤشرات الأداء واتجاهات الإيرادات وتوزيع طرق الدفع وتصدير بيانات التقارير والأعضاء إلى ملفات XLSX مباشرة.
+## Arabic summary
 
-يمكن تثبيت نسخة الويب على الهاتف كتطبيق PWA من خلال HTTPS ثم اختيار **تثبيت التطبيق** أو **إضافة إلى الشاشة الرئيسية**. يحتوي المشروع على manifest وService Worker، مع استثناء طلبات API من التخزين المؤقت حتى تبقى بيانات الأعضاء والمدفوعات والحضور والتقارير محدثة.
+PulseForge Gym Management هو نظام احترافي لإدارة الجيم مبني على React وTypeScript وtRPC وقاعدة بيانات MySQL/TiDB. يدعم إدارة الأعضاء والاشتراكات والمدفوعات والتقارير المالية وتصدير XLSX والحضور والمدربين والحصص والحجوزات والتدريب الشخصي من خلال لوحة تحكم متجاوبة.
 
-يوجد أيضاً مشروع Expo مستقل باسم `gym-management-mobile` كتطبيق مرافق أصلي للموبايل، ويدعم اللغتين ويحفظ اختيار اللغة ويتصل بنفس خادم tRPC عند إعداد `EXPO_PUBLIC_API_URL` وتدفق المصادقة الخاص بالموبايل.
-
-## الدعم والمساهمة
-
-قبل إرسال تغيير، شغّل `pnpm check` و`pnpm test -- --run`، ثم راجع التوافق بين مخطط Drizzle واستعلامات قاعدة البيانات وإجراءات tRPC وواجهة المستخدم. يجب أن تكون أي إضافة جديدة ثنائية اللغة، وأن تحافظ على صلاحيات الوصول، وأن تضيف اختبارات مناسبة للتدفقات الحساسة.
+يدعم النظام **اللغة الإنجليزية باتجاه LTR واللغة العربية باتجاه RTL** مع حفظ اختيار اللغة. كما يمكن تثبيت نسخة الويب كتطبيق PWA، ويوجد تطبيق Expo مستقل للموبايل يتصل بنفس الخادم باستخدام `EXPO_PUBLIC_API_URL` ورمز جلسة Bearer صالح.
 
 ## License
 
-This project is distributed under the license included in the repository.
+This project is distributed under the MIT License. See [`LICENSE`](./LICENSE).
+
+## Maintainer
+
+Maintained by **taha deab**.
