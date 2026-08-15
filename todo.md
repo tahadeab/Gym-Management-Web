@@ -226,6 +226,12 @@
 
 ## Publish Web-to-Desktop to the primary repository
 
-- [ ] Verify the intended GitHub repository, branch, remote, and local Web-to-Desktop diff
-- [ ] Commit the Web-to-Desktop conversion with `tahadeab <tahadeab@gmail.com>` and push it to the correct primary repository
-- [ ] Verify the remote commit, files, workflow, and release path on GitHub
+- [x] Verify the intended GitHub repository, branch, remote, and local Web-to-Desktop diff
+- [x] Commit the Web-to-Desktop conversion with `tahadeab <tahadeab@gmail.com>` and push it to the correct primary repository
+- [x] Verify the remote commit, files, workflow, and release path on GitHub
+
+## Primary Web repository release corrections
+
+- [ ] Add and verify a Windows Desktop Release workflow for the Web-owned Electron wrapper in Gym-Management-Web
+- [ ] Publish a follow-up commit with the required identity `tahadeab <tahadeab201@gmail.com>` and verify its remote metadata
+- [ ] Document that Gym-Management-Web has no Release yet until the Windows workflow is run successfully
