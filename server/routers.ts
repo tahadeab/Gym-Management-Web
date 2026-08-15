@@ -53,9 +53,13 @@ export const appRouter = router({
     list: protectedProcedure.query(() => db.listTrainers()),
     create: adminProcedure.input(z.object({ name: z.string().min(2), specialty: z.string().optional(), email: z.string().email().optional(), phone: z.string().optional(), active: z.boolean().default(true) })).mutation(({ input }) => db.createTrainer(input)),
   }),
+  rooms: router({
+    list: protectedProcedure.query(() => db.listRooms()),
+    create: adminProcedure.input(z.object({ name: z.string().min(2), capacity: z.number().int().positive(), location: z.string().optional(), active: z.boolean().default(true) })).mutation(({ input }) => db.createRoom(input)),
+  }),
   classes: router({
     list: protectedProcedure.input(z.object({ from: z.coerce.date().optional(), to: z.coerce.date().optional() }).optional()).query(({ input }) => db.listClasses(input?.from, input?.to)),
-    create: adminProcedure.input(z.object({ title: z.string().min(2), description: z.string().optional(), trainerId: z.number().int().positive(), startsAt: z.coerce.date(), endsAt: z.coerce.date(), capacity: z.number().int().positive(), price: z.coerce.number().nonnegative().default(0), status: z.enum(["scheduled", "cancelled", "completed"]).default("scheduled") })).mutation(({ input }) => db.createClass({ ...input, price: input.price.toFixed(2) })),
+    create: adminProcedure.input(z.object({ title: z.string().min(2), description: z.string().optional(), trainerId: z.number().int().positive(), roomId: z.number().int().positive().optional(), startsAt: z.coerce.date(), endsAt: z.coerce.date(), capacity: z.number().int().positive(), price: z.coerce.number().nonnegative().default(0), status: z.enum(["scheduled", "cancelled", "completed"]).default("scheduled") })).mutation(({ input }) => db.createClass({ ...input, price: input.price.toFixed(2) })),
     book: protectedProcedure.input(z.object({ classId: z.number().int().positive(), memberId: z.number().int().positive() })).mutation(({ input }) => db.bookClass(input.classId, input.memberId)),
     cancelBooking: protectedProcedure.input(z.object({ id: z.number().int().positive() })).mutation(({ input }) => db.cancelBooking(input.id)),
   }),

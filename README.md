@@ -39,7 +39,7 @@ The managed environment supplies platform variables such as `DATABASE_URL`, `JWT
 ## Local development
 
 ```bash
-git clone https://github.com/tahadeab/gym-management-web.git
+git clone https://github.com/tahadeab/Gym-Management-Web.git
 cd gym-management-web
 pnpm install
 pnpm check

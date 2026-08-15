@@ -1,9 +1,9 @@
-import { and, asc, desc, eq, gte, like, lte, or, sql } from "drizzle-orm";
+import { and, asc, desc, eq, gt, gte, like, lt, lte, or, sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { ENV } from "./_core/env";
 import {
   attendance, bookings, classes, members, payments, ptAssignments, ptPackages, ptSessions,
-  subscriptions, trainers, users, type InsertUser,
+  rooms, subscriptions, trainers, users, type InsertUser,
 } from "../drizzle/schema";
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -92,8 +92,22 @@ export async function checkOut(id: number) { const db = await requireDb(); await
 
 export async function listTrainers() { const db = await requireDb(); return db.select().from(trainers).orderBy(asc(trainers.name)); }
 export async function createTrainer(input: typeof trainers.$inferInsert) { const db = await requireDb(); const result = await db.insert(trainers).values(input); return { id: Number(result[0].insertId), ...input }; }
-export async function listClasses(from?: Date, to?: Date) { const db = await requireDb(); const dateFilter = from && to ? and(gte(classes.startsAt, from), lte(classes.startsAt, to)) : undefined; return db.select({ classItem: classes, trainerName: trainers.name, bookedCount: sql<number>`count(${bookings.id})` }).from(classes).innerJoin(trainers, eq(classes.trainerId, trainers.id)).leftJoin(bookings, and(eq(bookings.classId, classes.id), eq(bookings.status, "booked"))).where(dateFilter).groupBy(classes.id, trainers.name).orderBy(asc(classes.startsAt)); }
-export async function createClass(input: typeof classes.$inferInsert) { const db = await requireDb(); const result = await db.insert(classes).values(input); return { id: Number(result[0].insertId), ...input }; }
+export async function listRooms() { const db = await requireDb(); return db.select().from(rooms).where(eq(rooms.active, true)).orderBy(asc(rooms.name)); }
+export async function createRoom(input: typeof rooms.$inferInsert) { const db = await requireDb(); const result = await db.insert(rooms).values(input); return { id: Number(result[0].insertId), ...input }; }
+export async function listClasses(from?: Date, to?: Date) { const db = await requireDb(); const dateFilter = from && to ? and(gte(classes.startsAt, from), lte(classes.startsAt, to)) : undefined; return db.select({ classItem: classes, trainerName: trainers.name, roomName: rooms.name, bookedCount: sql<number>`count(${bookings.id})` }).from(classes).innerJoin(trainers, eq(classes.trainerId, trainers.id)).leftJoin(rooms, eq(classes.roomId, rooms.id)).leftJoin(bookings, and(eq(bookings.classId, classes.id), eq(bookings.status, "booked"))).where(dateFilter).groupBy(classes.id, trainers.name, rooms.name).orderBy(asc(classes.startsAt)); }
+
+export function timeRangesOverlap(startA: Date, endA: Date, startB: Date, endB: Date) { return startA < endB && endA > startB; }
+
+export function validateClassSchedule(input: { roomId?: number | null; capacity: number }, checks: { trainerConflict: boolean; room?: { capacity: number }; roomConflict: boolean }) {
+  if (checks.trainerConflict) throw new Error("Trainer is already scheduled during this time");
+  if (input.roomId) {
+    if (!checks.room) throw new Error("Room not found");
+    if (checks.room.capacity < input.capacity) throw new Error("Class capacity exceeds room capacity");
+    if (checks.roomConflict) throw new Error("Room is already booked during this time");
+  }
+}
+
+export async function createClass(input: typeof classes.$inferInsert) { const db = await requireDb(); const trainerConflict = await db.select({ id: classes.id }).from(classes).where(and(eq(classes.trainerId, input.trainerId), eq(classes.status, "scheduled"), lt(classes.startsAt, input.endsAt), gt(classes.endsAt, input.startsAt))).limit(1); let room: { capacity: number } | undefined; let roomConflict = false; if (input.roomId) { const roomRows = await db.select({ capacity: rooms.capacity }).from(rooms).where(and(eq(rooms.id, input.roomId), eq(rooms.active, true))).limit(1); room = roomRows[0]; roomConflict = Boolean((await db.select({ id: classes.id }).from(classes).where(and(eq(classes.roomId, input.roomId), eq(classes.status, "scheduled"), lt(classes.startsAt, input.endsAt), gt(classes.endsAt, input.startsAt))).limit(1))[0]); } validateClassSchedule(input, { trainerConflict: Boolean(trainerConflict[0]), room, roomConflict }); const result = await db.insert(classes).values(input); return { id: Number(result[0].insertId), ...input }; }
 export async function bookClass(classId: number, memberId: number) { const db = await requireDb(); const capacity = await db.select({ capacity: classes.capacity, booked: sql<number>`(select count(*) from bookings where classId = ${classId} and status = 'booked')` }).from(classes).where(eq(classes.id, classId)).limit(1); if (!capacity[0]) throw new Error("Class not found"); if (Number(capacity[0].booked) >= capacity[0].capacity) throw new Error("Class is full"); const result = await db.insert(bookings).values({ classId, memberId }); return Number(result[0].insertId); }
 export async function cancelBooking(id: number) { const db = await requireDb(); await db.update(bookings).set({ status: "cancelled" }).where(eq(bookings.id, id)); return true; }
 
