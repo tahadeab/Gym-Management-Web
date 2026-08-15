@@ -108,3 +108,10 @@
 - [x] Confirm server-side trainer and room overlap checks plus capacity enforcement in class creation
 - [x] Add Vitest coverage for trainer and room scheduling conflicts
 - [x] Explicitly verify Light/Dark mode and Toast rendering after room/trainer changes
+
+## Repository and runtime clarification
+
+- [ ] Document the difference between the legacy GYM-Management-System Electron/static project and the modern Gym-Management-Web application
+- [ ] Verify and document the exact startup commands for the modern web app and legacy desktop app
+- [ ] Update repository links and README guidance so users do not launch the legacy static placeholder when expecting the full web dashboard
+- [ ] Provide a clear Windows PowerShell troubleshooting section for Python fallback and project selection

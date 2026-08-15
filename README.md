@@ -1,5 +1,7 @@
 # PulseForge Gym Management Web
 
+> **Important:** This is the modern React/tRPC web application. It is different from the legacy Electron repository [`GYM-Management-System`](https://github.com/tahadeab/GYM-management-system), whose `npm run web` command only serves a small static inspection page. If you see a page with one welcome button, you launched the legacy repository rather than this application.
+
 PulseForge Gym Management is a production-oriented bilingual gym operations platform for staff and administrators. It combines a responsive React dashboard, a database-backed TypeScript API, financial reporting, member and subscription lifecycle management, class bookings, attendance, trainer management, personal training, and an installable Progressive Web App (PWA).
 
 The product supports **English with LTR layout** and **Arabic with RTL layout**. The selected language is persisted in the browser and can be changed without a page reload. The same backend can also serve the companion Expo mobile application.
@@ -40,14 +42,16 @@ The managed environment supplies platform variables such as `DATABASE_URL`, `JWT
 
 ```bash
 git clone https://github.com/tahadeab/Gym-Management-Web.git
-cd gym-management-web
+cd Gym-Management-Web
 pnpm install
 pnpm check
 pnpm test
 pnpm dev
 ```
 
-The development server prints the local URL when it starts. The default application entry is the dashboard. Authentication and protected queries require a configured session and database.
+The development server prints the local URL when it starts. The default application entry is the dashboard. Authentication and protected queries require a configured session and database. On Windows PowerShell, use the same commands from the project directory; do not run `npm run web`, because that command belongs to the legacy Electron repository.
+
+For the legacy desktop application, use [`tahadeab/GYM-management-system`](https://github.com/tahadeab/GYM-management-system), run `npm install`, and then `npm start`. For the full modern web dashboard, use this repository and run `pnpm dev`.
 
 ## Production build
 
