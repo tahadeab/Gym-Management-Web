@@ -71,3 +71,11 @@
 
 - [x] Document that the desktop repository has no configured installer/package build script and provide the supported source-release procedure
 - [x] Record final verification limitations: ADMIN_PASSWORD must be set for production, mobile token entry is transitional, and native push delivery is not configured
+
+## New GitHub repository copy
+
+- [ ] Prepare a clean copy of gym-management-web for a new repository under the user's GitHub account
+- [ ] Verify README documents prerequisites, environment variables, setup, database workflow, development, production build, testing, PWA, mobile companion, and bilingual support
+- [ ] Verify the repository contains a project-owned MIT License
+- [ ] Create the new private GitHub repository and push the verified copy
+- [ ] Confirm the remote URL, branch, commit author configuration, and repository contents
