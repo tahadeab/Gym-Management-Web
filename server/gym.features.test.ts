@@ -42,6 +42,16 @@ describe("gym feature procedures", () => {
     expect(assignment).toHaveBeenCalledWith({ memberId: 2, trainerId: 4, packageId: 5, startsAt: new Date("2026-01-01"), status: "active" });
   });
 
+  it("rejects trainer, room, and capacity scheduling conflicts", () => {
+    const start = new Date("2026-08-15T10:00:00Z");
+    const end = new Date("2026-08-15T11:00:00Z");
+    expect(db.timeRangesOverlap(start, end, new Date("2026-08-15T10:30:00Z"), new Date("2026-08-15T11:30:00Z"))).toBe(true);
+    expect(db.timeRangesOverlap(start, end, new Date("2026-08-15T11:00:00Z"), new Date("2026-08-15T12:00:00Z"))).toBe(false);
+    expect(() => db.validateClassSchedule({ roomId: 2, capacity: 20 }, { trainerConflict: true, room: { capacity: 30 }, roomConflict: false })).toThrow("Trainer is already scheduled");
+    expect(() => db.validateClassSchedule({ roomId: 2, capacity: 20 }, { trainerConflict: false, room: { capacity: 30 }, roomConflict: true })).toThrow("Room is already booked");
+    expect(() => db.validateClassSchedule({ roomId: 2, capacity: 40 }, { trainerConflict: false, room: { capacity: 30 }, roomConflict: false })).toThrow("capacity exceeds");
+  });
+
   it("cancels the exact booking id supplied by the caller", async () => {
     const cancel = vi.spyOn(db, "cancelBooking").mockResolvedValue({ id: 22, status: "cancelled" } as never);
     const result = await appRouter.createCaller(createContext("user")).classes.cancelBooking({ id: 22 });

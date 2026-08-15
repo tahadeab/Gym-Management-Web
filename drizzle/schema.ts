@@ -34,6 +34,15 @@ export const trainers = mysqlTable("trainers", {
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 
+export const rooms = mysqlTable("rooms", {
+  id: int("id").autoincrement().primaryKey(),
+  name: varchar("name", { length: 120 }).notNull(),
+  capacity: int("capacity").notNull(),
+  location: varchar("location", { length: 160 }),
+  active: boolean("active").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+}, table => ({ nameIdx: index("rooms_name_idx").on(table.name) }));
+
 export const subscriptions = mysqlTable("subscriptions", {
   id: int("id").autoincrement().primaryKey(),
   memberId: int("memberId").notNull(),
@@ -70,6 +79,7 @@ export const classes = mysqlTable("classes", {
   title: varchar("title", { length: 160 }).notNull(),
   description: text("description"),
   trainerId: int("trainerId").notNull(),
+  roomId: int("roomId"),
   startsAt: timestamp("startsAt").notNull(),
   endsAt: timestamp("endsAt").notNull(),
   capacity: int("capacity").notNull(),
@@ -116,6 +126,7 @@ export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
 export type Member = typeof members.$inferSelect;
 export type Trainer = typeof trainers.$inferSelect;
+export type Room = typeof rooms.$inferSelect;
 export type Subscription = typeof subscriptions.$inferSelect;
 export type GymClass = typeof classes.$inferSelect;
 export type Booking = typeof bookings.$inferSelect;

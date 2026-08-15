@@ -74,8 +74,37 @@
 
 ## New GitHub repository copy
 
-- [ ] Prepare a clean copy of gym-management-web for a new repository under the user's GitHub account
-- [ ] Verify README documents prerequisites, environment variables, setup, database workflow, development, production build, testing, PWA, mobile companion, and bilingual support
-- [ ] Verify the repository contains a project-owned MIT License
-- [ ] Create the new private GitHub repository and push the verified copy
-- [ ] Confirm the remote URL, branch, commit author configuration, and repository contents
+- [x] Prepare a clean copy of gym-management-web for a new repository under the user's GitHub account
+- [x] Verify README documents prerequisites, environment variables, setup, database workflow, development, production build, testing, PWA, mobile companion, and bilingual support
+- [x] Verify the repository contains a project-owned MIT License
+- [x] Create the new private GitHub repository and push the verified copy
+- [x] Confirm the remote URL, branch, commit author configuration, and repository contents
+
+## UX, CI, and reusable workflow enhancements
+
+- [x] Verify the current GitHub repository names and update README links to the active repositories
+- [x] Add interactive toast feedback for successful and failed member operations and other important mutations
+- [x] Add a persistent Light/Dark mode toggle with accessible labels and correct theme tokens
+- [x] Add GitHub Actions workflows for type checks, tests, and production build verification
+- [x] Create and validate a reusable gym-management workflow skill using skill-creator guidance
+- [x] Run final checks, save a checkpoint, and push the updated copy to the active repository
+
+## Gap remediation from final review
+
+- [ ] Add toast success/error handling for PT package, assignment, session, and attendance mutations
+- [ ] Refactor dashboard shell and major surfaces to semantic theme tokens for consistent Light/Dark rendering
+- [ ] Save a new checkpoint after remediation and push all UX/CI changes to the active GitHub repository
+
+## Trainer and room scheduling enhancement
+
+- [x] Review the existing trainers/classes data model and identify missing room scheduling capabilities
+- [x] Add room management and conflict-aware class scheduling where supported by the current schema
+- [x] Improve trainer management UI with operational fields and interactive feedback
+- [x] Verify Toast notifications and Light/Dark mode after the scheduling changes
+- [ ] Push the latest changes to the active GitHub repository without exposing credentials
+
+## Scheduling and theme verification gaps
+
+- [x] Confirm server-side trainer and room overlap checks plus capacity enforcement in class creation
+- [x] Add Vitest coverage for trainer and room scheduling conflicts
+- [x] Explicitly verify Light/Dark mode and Toast rendering after room/trainer changes
