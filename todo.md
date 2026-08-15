@@ -154,3 +154,56 @@
 
 - [x] Implement and test actual attendance/equipment chart rendering and report total updates in Electron
 - [x] Document the latest EXE status, Linux unpacked artifact, and Windows/CI NSIS requirement in the desktop README
+
+## Release and editing UX follow-up
+
+- [x] Add bilingual confirmation messages before destructive edits/deletes in direct Electron forms
+- [x] Add debounced autosave drafts for room, class, and equipment forms with visible save status and recovery
+- [ ] Add Playwright UI coverage for inline forms, filters, report charts, and confirmation flows
+- [x] Add Windows GitHub Actions workflow to build and publish the NSIS EXE as a Release artifact
+- [x] Document EXE download/install workflow and distinguish Release assets from repository source files
+- [ ] Review fine-grained permissions and audit logging for production multi-branch use
+- [ ] Run full verification and save a new checkpoint
+
+## Release verification corrections
+
+- [x] Add behavioral tests proving room, class, and equipment drafts persist and restore after reopening
+- [x] Document and verify the autosave storage mechanism used by all three direct forms
+- [ ] Push the Windows workflow after GitHub workflow permission is available and verify it in Actions
+- [x] Run the Windows workflow or tag build once and record the resulting EXE artifact or Release URL
+
+## Windows release retry
+
+- [x] Confirm the existing remotely committed `.github/workflows/windows-release.yml` in the Electron repository; workflow upload itself remains permission-gated
+- [x] Verify the existing remote workflow is visible and run the Windows EXE build
+- [x] Record the resulting artifact and the earlier GitHub workflow-permission error
+
+## GitHub token permission correction
+
+- [ ] Add repository Contents: Read and write alongside Workflows: Read and write, then retry workflow upload
+
+## Final workflow upload attempt
+
+- [ ] Upload `.github/workflows/windows-release.yml` after the token permission update and verify remote visibility
+- [ ] Trigger the Windows build and record the EXE artifact or any remaining permission error
+
+## Upload retry after reconnect
+
+- [ ] Retry the Windows workflow upload after GitHub connector reconnect
+- [ ] Verify workflow visibility and report the exact EXE build status
+
+## Manual workflow creation
+
+- [ ] Paste and commit the local Windows workflow content in GitHub at `.github/workflows/windows-release.yml`
+- [ ] Confirm the workflow appears under Actions and run the Windows build
+
+## Windows workflow failure diagnosis
+
+- [x] Collect the first failing step log from Windows Desktop Release run #1
+- [x] Fix the identified workflow or packaging error and rerun the build
+
+## Lockfile correction
+
+- [x] Synchronize package-lock.json with Electron package.json so Windows CI can run `npm ci`
+- [x] Update the manually committed workflow if needed and rerun the failed Windows job
+- [x] Prevent electron-builder implicit GitHub publishing in the Windows build; let the workflow's release action publish the EXE after artifact creation
