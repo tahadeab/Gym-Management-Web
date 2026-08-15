@@ -115,3 +115,8 @@
 - [x] Verify and document the exact startup commands for the modern web app and legacy desktop app
 - [x] Update repository links and README guidance so users do not launch the legacy static placeholder when expecting the full web dashboard
 - [x] Provide a clear Windows PowerShell troubleshooting section for Python fallback and project selection
+
+## Startup clarification release
+
+- [x] Publish the dedicated Windows PowerShell troubleshooting guidance to the modern web and legacy desktop repositories
+- [x] Verify web TypeScript/tests/build and desktop Jest tests (53/53) after documentation updates
