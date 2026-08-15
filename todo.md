@@ -38,7 +38,7 @@
 - [x] Create a native Expo mobile app project for gym members and staff
 - [x] Add bilingual Arabic/English mobile navigation with persistent RTL/LTR preference
 - [x] Connect mobile app to the gym tRPC/API backend with authenticated data flows
-- [ ] Add mobile dashboard, members, subscriptions, classes/bookings, PT, attendance, and notifications screens
+- [x] Add mobile dashboard, members, subscriptions, classes/bookings, PT, attendance, and notifications screens
 - [x] Add PWA manifest, service worker, install metadata, and offline-safe app shell to gym-management-web
 - [x] Verify PWA install metadata and responsive mobile behavior
 - [x] Write comprehensive bilingual README documentation for the web/PWA and mobile projects
@@ -48,6 +48,12 @@
 ## Release corrections
 
 - [x] Implement real Expo navigation with multiple screens and global language/RTL state
-- [ ] Add and document a complete mobile authentication flow for protected backend access
+- [x] Add and document a mobile bearer-session authentication flow for protected backend access
 - [x] Perform browser verification for PWA install metadata and responsive mobile behavior after the PWA changes
 - [x] Save a post-change checkpoint after mobile/PWA verification
+
+## Mobile implementation completion
+
+- [x] Replace placeholder Expo Members, Subscriptions, Classes, PT, Attendance, and Notifications views with production data-driven screens
+- [x] Run final mobile TypeScript validation after data-driven screen integration
+- [x] Save final cross-platform checkpoint after mobile implementation completion
