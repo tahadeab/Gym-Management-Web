@@ -141,3 +141,16 @@
 - [x] Add explicit bilingual empty states for desktop dashboard activities, notifications, and alerts
 - [x] Add bilingual dashboard error states with retry handling for failed data loads
 - [x] Verify desktop empty/error states with automated tests and package/build checks
+
+## Desktop workflow UX expansion
+
+- [x] Replace room, class, and equipment prompt actions with bilingual inline CRUD forms and edit/delete controls
+- [x] Add advanced search and filtering controls for classes and equipment pages
+- [x] Add a visual reports dashboard for attendance and equipment utilization metrics
+- [x] Verify whether a Windows EXE installer was produced and document the exact artifact or CI limitation
+- [x] Run focused and full desktop tests, build verification, and save a checkpoint
+
+## Final verification corrections
+
+- [x] Implement and test actual attendance/equipment chart rendering and report total updates in Electron
+- [x] Document the latest EXE status, Linux unpacked artifact, and Windows/CI NSIS requirement in the desktop README
